@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  # Aether API Server
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./.aether:/app/.aether
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Ollama for local models
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  # PostgreSQL for persistent storage
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=aether
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-aether_dev_password}
+      - POSTGRES_DB=aether
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Meilisearch for full-text search (optional)
+  search:
+    image: getmeili/meilisearch:latest
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-aether_dev_key}
+    volumes:
+      - search_data:/meili_data
+    ports:
+      - "7700:7700"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  search_data:
+  ollama_data:
