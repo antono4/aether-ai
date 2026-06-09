@@ -243,8 +243,7 @@ export class MemoryStore {
 
   private extractHighlights(content: string, query: string): string[] {
     const highlights: string[] = [];
-    const contentLower = content.toLowerCase();
-    const queryLower = query.toLowerCase();
+    const queryWords = query.toLowerCase().split(/\s+/);
 
     // Find sentences containing query terms
     const sentences = content.split(/[.!?]+/);
@@ -260,6 +259,3 @@ export class MemoryStore {
     return [...new Set(highlights)].slice(0, 3);
   }
 }
-
-// Query words for scoring
-const queryWords: string[] = [];
