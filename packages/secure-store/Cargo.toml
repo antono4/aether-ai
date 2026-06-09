@@ -1,0 +1,12 @@
+[package]
+name = "aether-secure-store"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "aether_secure_store"
+
+[dependencies]
+keyring = "3"
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"

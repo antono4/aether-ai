@@ -1,0 +1,27 @@
+{
+  "name": "@aether/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "aether": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aether/shared-types": "workspace:*",
+    "chalk": "^5.4.1",
+    "commander": "^12.1.0",
+    "figlet": "^1.8.0",
+    "inquirer": "^11.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/inquirer": "^9.0.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
