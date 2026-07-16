@@ -1,5 +1,8 @@
 # Aether AI
 
+> **Created by Antono**
+
+
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Early%20Beta-orange" alt="Early Beta" />
   <a href="https://github.com/antono4/aether-ai/releases/latest"><img src="https://img.shields.io/github/v/release/antono4/aether-ai?label=Latest" alt="Latest Release" /></a>
